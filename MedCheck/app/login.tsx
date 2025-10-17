@@ -1,24 +1,16 @@
-import { Text, View, StyleSheet, TextInput, TouchableOpacity, Alert } from 'react-native';
+import { Link } from 'expo-router'; // 1. Importamos a peça <Link> para navegação
 import React, { useState } from 'react';
+import { Alert, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native';
 
 export default function TelaDeLogin() {
-  // 1. Criando as "memórias" para guardar o e-mail e a senha
   const [email, setEmail] = useState('');
   const [senha, setSenha] = useState('');
 
-  // 2. A função que será executada quando o botão for pressionado
   const handleLogin = () => {
-    // 3. Verificação: se e-mail OU senha estiverem vazios...
     if (!email || !senha) {
-      // ...mostre um alerta na tela.
-      Alert.alert(
-        'Atenção!',
-        'Por favor, preencha todos os campos.'
-      );
-      return; // E pare a função aqui.
+      Alert.alert('Atenção!', 'Por favor, preencha todos os campos.');
+      return;
     }
-
-    // 4. Se a verificação passar, execute este código.
     console.log('Login bem-sucedido!');
     console.log('E-mail:', email);
     console.log('Senha:', senha);
@@ -29,18 +21,16 @@ export default function TelaDeLogin() {
       
       <Text style={styles.titulo}>Bem-vindo ao MedCheck</Text>
       
-      {/* Campo de E-mail/Usuário, conectado à memória 'email' */}
       <TextInput
         style={styles.input}
         placeholder="Digite seu e-mail ou usuário"
         placeholderTextColor="#888"
         value={email}
         onChangeText={setEmail}
-        keyboardType="email-address" // Adiciona um teclado otimizado para e-mail
-        autoCapitalize="none" // Garante que o e-mail comece com letra minúscula
+        keyboardType="email-address"
+        autoCapitalize="none"
       />
 
-      {/* Campo de Senha, conectado à memória 'senha' */}
       <TextInput
         style={styles.input}
         placeholder="Digite sua senha"
@@ -50,16 +40,24 @@ export default function TelaDeLogin() {
         onChangeText={setSenha}
       />
 
-      {/* Botão de Entrar, que chama a função 'handleLogin' ao ser tocado */}
       <TouchableOpacity style={styles.botao} onPress={handleLogin}>
         <Text style={styles.textoDoBotao}>Entrar</Text>
       </TouchableOpacity>
+
+      {/* 2. ADICIONAMOS ESTA SEÇÃO PARA OS LINKS */}
+      <View style={styles.linksContainer}>
+        <Link href="/cadastro" style={styles.link}>
+          Não tem uma conta? Cadastre-se
+        </Link>
+        <Link href="/esqueceu-senha" style={styles.link}>
+          Esqueceu sua senha?
+        </Link>
+      </View>
 
     </View>
   );
 }
 
-// Folha de estilos para organizar o visual
 const styles = StyleSheet.create({
   container: {
     flex: 1,
@@ -98,5 +96,16 @@ const styles = StyleSheet.create({
     color: '#fff',
     fontSize: 18,
     fontWeight: 'bold',
-  }
+  },
+  // 3. ADICIONAMOS OS ESTILOS PARA OS LINKS
+  linksContainer: {
+    marginTop: 20,
+    width: '100%',
+    alignItems: 'center',
+    gap: 15,
+  },
+  link: {
+    color: '#007BFF',
+    fontSize: 16,
+  },
 });
