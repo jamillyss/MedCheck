@@ -1,12 +1,12 @@
-import { Link, useRouter } from 'expo-router';
+import { Text, View, StyleSheet, TextInput, TouchableOpacity, Alert } from 'react-native';
 import React, { useState } from 'react';
-import { Alert, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native';
+import { Link, useRouter } from 'expo-router';
 
 // Reutilizamos nossa função de validação de e-mail!
 const isEmailValido = (email: string) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
 
 export default function TelaEsqueceuSenha() {
-  const router = useRouter();
+  const router = useRouter(); // Para navegar de volta ao login
   const [email, setEmail] = useState('');
 
   const handleRecuperarSenha = () => {
@@ -27,7 +27,8 @@ export default function TelaEsqueceuSenha() {
     Alert.alert(
       'Verifique seu e-mail',
       `Se houver uma conta associada a ${email}, um link para redefinir sua senha foi enviado.`,
-      [{ text: 'OK', onPress: () => router.push('/login') }] // Botão que leva de volta ao login
+      // Botão que leva de volta ao login após o sucesso
+      [{ text: 'OK', onPress: () => router.push('/login') }] 
     );
   };
 
